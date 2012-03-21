@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Kenneth Vestergaard"]
   s.email       = ["kvs@binarysolutions.dk"]
   s.homepage    = "https://github.com/kvs/vagrant-proxyssh"
-  s.summary     = "A Vagrant plugin"
-  s.description = "A Vagrant plugin"
+  s.summary     = "A Vagrant plugin + ssh_config snippet for ssh'ing to a VM"
+  s.description = "Makes it possible to use 'ssh' to login to a Vagrant VM, without adding multiple fake hosts to ~/.ssh/config"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
