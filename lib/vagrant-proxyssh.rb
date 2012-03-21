@@ -43,9 +43,6 @@ class Vagrant::Command::ProxySSH < Vagrant::Command::Base
 			else
 				raise Errors::SSHPortNotDetected if ssh_info[:port].nil?
 
-				connect_socket
-				forward_data
-
 				exec 'nc', '127.0.0.1', ssh_info[:port].to_s
 			end
 		end
