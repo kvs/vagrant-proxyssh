@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+vmname = ARGV[0].sub(/^vagrant-?/, '')
+
+port = 0
+
+raise "No Vagrant here" unless File.exist?('Vagrantfile')
+raise "No active Vagrant here" unless File.exist?('.vagrant')
+
+if ENV['PATH'].split(/:/).any? { |path| File.executable?("#{path}/VBoxManage") }
+	require 'json'
+	vmname = "default" if vmname == ""
+	vms = JSON.load(File.read('.vagrant'))["active"]
+	ssh_info = `VBoxManage showvminfo #{vms[vmname]} | grep 'name = ssh'`
+	port = ssh_info.match(/host port = (\d+),/)[1]
+else
+	cmd = 'bundle exec vagrant'
+	cmd = 'vagrant' if ENV['PATH'].split(/:/).any? { |path| File.executable?("#{path}/vagrant") }
+	port = `#{cmd} ssh-config #{vmname} | grep Port`.match(/Port (\d+)/)[1]
+end
+
+raise "Cannot find port-info for Vagrant host" if port == 0
+
+exec "nc", "127.0.0.1", port

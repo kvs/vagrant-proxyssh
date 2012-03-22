@@ -16,14 +16,24 @@ SSH-setup.
 
 ## Installation
 
-Either use `vagrant gem`, or add a `gem "vagrant-proxyssh"` to your `Gemfile`.
+Use `vagrant gem install vagrant-proxyssh` if you have a packaged installation of Vagrant.
 
-Before first use, you can run `vagrant proxy-ssh --setup` to add the necessary
+Use `gem install vagrant-proxyssh` if you have Vagrant installed directly as a gem.
+
+Use `gem "vagrant-proxyssh"` if you bundle Vagrant in a `Gemfile`.
+
+Run `vagrant proxy-ssh --setup` somewhere with an active Vagrant to add the necessary
 configuration to `~/.ssh/config`.
 
-The setup routine is hard-coded for `rbenv`, and assumes Vagrant is bundled with
-each project. Simply modify the `ProxyCommand` line in `~/.ssh/config` if you use
-a system-Ruby, or RVM, or have Vagrant installed as a system gem.
+The setup routine assumes your login environment has the right Ruby-version in its path.
+
+### OS X
+
+On OS X, your login environment is determined by `~/.MacOSX/environment.plist`, and may
+not reflect what you have in your `.bashrc`, `.zshrc`, or such.
+
+Specifically, things may not work with Rubies installed with RVM, rbenv, or Homebrew,
+since none of the usual paths are in the default environment.
 
 
 ## Usage
